@@ -52,7 +52,7 @@ const taskService = {
     return { ...newTask };
   },
 
-  async update(id, taskData) {
+async update(id, taskData) {
     await delay(250);
     const tasks = loadTasksFromStorage();
     const index = tasks.findIndex(t => t.Id === parseInt(id));

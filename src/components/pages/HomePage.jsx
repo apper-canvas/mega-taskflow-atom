@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import taskService from "@/services/api/taskService";
-import Header from "@/components/organisms/Header";
-import TaskList from "@/components/organisms/TaskList";
-import TaskForm from "@/components/organisms/TaskForm";
-import DeleteConfirmation from "@/components/organisms/DeleteConfirmation";
 import Modal from "@/components/molecules/Modal";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import DeleteConfirmation from "@/components/organisms/DeleteConfirmation";
+import Header from "@/components/organisms/Header";
+import TaskForm from "@/components/organisms/TaskForm";
+import TaskList from "@/components/organisms/TaskList";
 import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import taskService from "@/services/api/taskService";
 
 const HomePage = () => {
 const [tasks, setTasks] = useState([]);
@@ -68,7 +68,7 @@ const handleToggleTask = async (taskId) => {
     }
   };
 
-  const handleUpdateTask = async (taskId, taskData) => {
+const handleUpdateTask = async (taskId, taskData) => {
     try {
       const updatedTask = await taskService.update(taskId, taskData);
       setTasks(prevTasks =>
@@ -144,12 +144,12 @@ const handleToggleTask = async (taskId) => {
         taskCount={tasks.length}
       />
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+<main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {tasks.length === 0 ? (
           <Empty onAddTask={() => setIsAddModalOpen(true)} />
         ) : (
           <TaskList
-tasks={tasks}
+            tasks={tasks}
             onToggle={handleToggleTask}
             onDelete={handleDeleteClick}
             onUpdate={handleUpdateTask}

@@ -15,6 +15,7 @@ const TaskCard = ({ task, onToggle, onDelete, onUpdate }) => {
     title: task.title,
     description: task.description || ""
   });
+
   const handleEdit = () => {
     setIsEditing(true);
     setEditedTask({
@@ -71,7 +72,7 @@ const TaskCard = ({ task, onToggle, onDelete, onUpdate }) => {
         </div>
 
 <div className="flex-1 min-w-0">
-          {isEditing ? (
+{isEditing ? (
             <div className="space-y-3 mb-3">
               <div>
                 <Input
@@ -144,7 +145,7 @@ const TaskCard = ({ task, onToggle, onDelete, onUpdate }) => {
         </div>
 
         <div className="flex-shrink-0 flex items-center gap-2">
-          {isEditing ? (
+{isEditing ? (
             <>
               <Button
                 variant="ghost"
