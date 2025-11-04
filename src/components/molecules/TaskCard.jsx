@@ -1,21 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/utils/cn";
+import { format } from "date-fns";
 import ApperIcon from "@/components/ApperIcon";
-import Checkbox from "@/components/atoms/Checkbox";
 import Button from "@/components/atoms/Button";
+import Checkbox from "@/components/atoms/Checkbox";
 import Input from "@/components/atoms/Input";
 import Textarea from "@/components/atoms/Textarea";
-import { format } from "date-fns";
+import { cn } from "@/utils/cn";
 
 const TaskCard = ({ task, onToggle, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [editedTask, setEditedTask] = useState({
     title: task.title,
     description: task.description || ""
   });
-  const [isSaving, setIsSaving] = useState(false);
-
   const handleEdit = () => {
     setIsEditing(true);
     setEditedTask({
