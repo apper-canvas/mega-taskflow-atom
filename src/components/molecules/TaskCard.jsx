@@ -70,51 +70,72 @@ const TaskCard = ({ task, onToggle, onDelete, onUpdate }) => {
           />
         </div>
 
-        <div className="flex-1 min-w-0">
-{isEditing ? (
-            <Input
-              value={editedTask.title}
-              onChange={(e) => setEditedTask(prev => ({ ...prev, title: e.target.value }))}
-              className="mb-2"
-              placeholder="Task title"
-              disabled={isSaving}
-              autoFocus
-            />
+<div className="flex-1 min-w-0">
+          {isEditing ? (
+            <div className="space-y-3 mb-3">
+              <div>
+                <Input
+                  value={editedTask.title}
+                  onChange={(e) => setEditedTask(prev => ({ ...prev, title: e.target.value }))}
+                  placeholder="Task title"
+                  disabled={isSaving}
+                  className="w-full"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <Textarea
+                  value={editedTask.description}
+                  onChange={(e) => setEditedTask(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Task description (optional)"
+                  disabled={isSaving}
+                  className="w-full min-h-[80px]"
+                />
+              </div>
+              <div className="flex gap-2 justify-end">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCancel}
+                  disabled={isSaving}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleSave}
+                  disabled={!editedTask.title.trim() || isSaving}
+                >
+                  {isSaving ? "Saving..." : "Save"}
+                </Button>
+              </div>
+            </div>
           ) : (
-            <h3 
-              className={cn(
-                "text-lg font-semibold text-slate-900 mb-1 transition-all duration-300 cursor-pointer hover:text-primary",
-                task.completed && "line-through text-slate-500"
-              )}
-              onClick={handleEdit}
-            >
-              {task.title}
-            </h3>
-          )}
-          
-{isEditing ? (
-            <Textarea
-              value={editedTask.description}
-              onChange={(e) => setEditedTask(prev => ({ ...prev, description: e.target.value }))}
-              className="mb-2"
-              placeholder="Task description (optional)"
-              disabled={isSaving}
-              rows={3}
-            />
-          ) : (
-            task.description && (
-              <p 
+            <>
+              <h3 
                 className={cn(
-                  "text-sm text-slate-600 mb-2 line-clamp-2 transition-all duration-300 cursor-pointer hover:text-primary",
-                  task.completed && "text-slate-400"
+                  "text-lg font-semibold text-slate-900 mb-1 transition-all duration-300 cursor-pointer hover:text-primary",
+                  task.completed && "line-through text-slate-500"
                 )}
                 onClick={handleEdit}
               >
-                {task.description}
-              </p>
-            )
+                {task.title}
+              </h3>
+              {task.description && (
+                <p 
+                  className={cn(
+                    "text-sm text-slate-600 mb-2 line-clamp-2 transition-all duration-300 cursor-pointer hover:text-primary",
+                    task.completed && "text-slate-400"
+                  )}
+                  onClick={handleEdit}
+                >
+                  {task.description}
+                </p>
+              )}
+            </>
           )}
-{!isEditing && (
+          {!isEditing && (
             <div className="flex items-center gap-2 text-xs text-slate-400">
               <ApperIcon name="Calendar" size={14} />
               <span>{format(new Date(task.createdAt), "MMM d, yyyy")}</span>
