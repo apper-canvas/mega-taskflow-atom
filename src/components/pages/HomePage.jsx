@@ -11,14 +11,13 @@ import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
 
 const HomePage = () => {
-  const [tasks, setTasks] = useState([]);
+const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
-
   const loadTasks = async () => {
     try {
       setError(null);
@@ -52,7 +51,7 @@ const HomePage = () => {
     }
   };
 
-  const handleToggleTask = async (taskId) => {
+const handleToggleTask = async (taskId) => {
     try {
       const updatedTask = await taskService.toggleComplete(taskId);
       setTasks(prevTasks => 
@@ -66,6 +65,22 @@ const HomePage = () => {
     } catch (err) {
       toast.error(err.message || "Failed to update task");
       console.error("Error toggling task:", err);
+    }
+  };
+
+  const handleUpdateTask = async (taskId, taskData) => {
+    try {
+      const updatedTask = await taskService.update(taskId, taskData);
+      setTasks(prevTasks =>
+        prevTasks.map(task =>
+          task.Id === taskId ? updatedTask : task
+        )
+      );
+      toast.success("Task updated successfully");
+    } catch (err) {
+      toast.error(err.message || "Failed to update task");
+      console.error("Error updating task:", err);
+      throw err;
     }
   };
 
@@ -134,9 +149,10 @@ const HomePage = () => {
           <Empty onAddTask={() => setIsAddModalOpen(true)} />
         ) : (
           <TaskList
-            tasks={tasks}
+tasks={tasks}
             onToggle={handleToggleTask}
             onDelete={handleDeleteClick}
+            onUpdate={handleUpdateTask}
           />
         )}
       </main>
